@@ -1,53 +1,60 @@
 <script lang="ts">
-  import { signal } from '@angular/core';
+import { signal } from '@angular/core';
 
-  const count = signal(0);
+defineMetadata({);
 
-  function increment() {
-    this.count.update((count) => count + 1);
-  }
+const count = signal(0);
+
+function increment() {
+  this.count.update((count) => count + 1);
+}
+
+function throwError() {
+  throw new Error('This is an error');
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://analogjs.org/" target="_blank">
-      <img alt="Analog Logo" class="logo analog" src="/analog.svg" />
-    </a>
-  </div>
+<div>
+  <a href="https://analogjs.org/" target="_blank">
+    <img alt="Analog Logo" class="logo analog" src="/analog.svg" />
+  </a>
+</div>
 
-  <h2>Analog</h2>
+<h2>Analog</h2>
 
-  <h3>The fullstack meta-framework for Angular!</h3>
+<h3>The fullstack meta-framework for Angular!</h3>
 
-  <div class="card">
-    <button type="button" (click)="increment()">Count {{ count() }}</button>
-  </div>
+<div class="card">
+  <button type="button" (click)="increment()">Count {{ count() }}</button>
+  <button type="button" (click)="throwError()">Throw error</button>
+  <button routerLink="/ssr-error">Go to SSR error</button>
+  <a routerLink="/about">Go to About</a>
+</div>
 
-  <p class="read-the-docs">
-    <a href="https://analogjs.org" target="_blank">Docs</a> |
-    <a href="https://github.com/analogjs/analog" target="_blank">GitHub</a> |
-    <a href="https://github.com/sponsors/brandonroberts" target="_blank">
-      Sponsor
+<p class="read-the-docs">
+  <a href="https://analogjs.org" target="_blank">Docs</a> |
+  <a href="https://github.com/analogjs/analog" target="_blank">GitHub</a> |
+  <a href="https://github.com/sponsors/brandonroberts" target="_blank"> Sponsor
     </a>
   </p>
 </template>
 
 <style>
-  .logo {
-    will-change: filter;
-  }
+.logo {
+  will-change: filter;
+}
 
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
 
-  .read-the-docs > * {
-    color: #fff;
-  }
+.read-the-docs>* {
+  color: #fff;
+}
 
-  @media (prefers-color-scheme: light) {
-    .read-the-docs > * {
-      color: #213547;
+@media (prefers-color-scheme: light) {
+  .read-the-docs>* { color: #213547;
     }
   }
 </style>

@@ -3,9 +3,18 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  inject,
+  provideAppInitializer,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideFileRouter, requestContextInterceptor } from '@analogjs/router';
+
+import * as Sentry from '@sentry/angular';
+import { Router } from '@angular/router';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,8 +22,19 @@ export const appConfig: ApplicationConfig = {
     provideFileRouter(),
     provideHttpClient(
       withFetch(),
-      withInterceptors([requestContextInterceptor])
+      withInterceptors([requestContextInterceptor]),
     ),
     provideClientHydration(),
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler(),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    provideAppInitializer(() => {
+      inject(Sentry.TraceService);
+    }),
   ],
 };
